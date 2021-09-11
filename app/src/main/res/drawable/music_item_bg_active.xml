@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:color="#595D98F9"
+    android:color="#59FFFFFF"
     tools:targetApi="lollipop"> <!-- ripple effect color -->
     <item android:id="@android:id/background">
         <shape>
-            <solid android:color="@color/white" />
+            <solid android:color="@color/main" />
         </shape>
     </item>
 </ripple>

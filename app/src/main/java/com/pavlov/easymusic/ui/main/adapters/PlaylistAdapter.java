@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pavlov.easymusic.R;
@@ -30,7 +31,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     @NonNull
     @Override
     public PlaylistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_playlist,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_playlist, parent, false);
 
         return new PlaylistViewHolder(view);
     }
@@ -40,6 +41,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         Song song =arrayList.get(position);
         holder.title.setText(song.getTitle());
         holder.artist.setText(song.getArtist());
+        holder.duration.setText(song.getDuration().toString());
     }
 
     @Override
@@ -49,14 +51,17 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     public static class PlaylistViewHolder extends  RecyclerView.ViewHolder{
 
-        public ImageView image;
+        public CardView imageContainer;
         public TextView title;
         public TextView artist;
+        public TextView duration;
 
         public PlaylistViewHolder(@NonNull View itemView) {
             super(itemView);
-            //title = itemView.findViewById(R.id.title);
-            //artist = itemView.findViewById(R.id.artist);
+            title = itemView.findViewById(R.id.music_name);
+            artist = itemView.findViewById(R.id.music_album);
+            duration = itemView.findViewById(R.id.music_duration);
+            imageContainer = itemView.findViewById(R.id.image_container);
         }
     }
 }
