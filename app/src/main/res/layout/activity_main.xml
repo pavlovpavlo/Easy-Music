@@ -7,5 +7,9 @@
     android:background="@color/gray_light"
     tools:context=".ui.main.MainActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/songs_list"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

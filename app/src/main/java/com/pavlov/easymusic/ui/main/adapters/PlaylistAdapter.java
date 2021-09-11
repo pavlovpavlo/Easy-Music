@@ -16,16 +16,22 @@ import com.pavlov.easymusic.R;
 import com.pavlov.easymusic.model.Song;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder> {
 
-    private ArrayList<Song> arrayList;
+    private List<Song> arrayList;
     private Context ctx;
 
-    public PlaylistAdapter(ArrayList<Song> arrayList, Context ctx){
-        this.arrayList = arrayList;
+    public PlaylistAdapter(Context ctx){
         this.ctx = ctx;
+        arrayList = new ArrayList<>();
+    }
+
+    public void setArrayList(List<Song> arrayList) {
+        this.arrayList = arrayList;
+        notifyDataSetChanged();
     }
 
     @NonNull

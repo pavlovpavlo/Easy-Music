@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:color="#595D98F9"
     tools:targetApi="lollipop"> <!-- ripple effect color -->
-    <item android:id="@android:id/background">
+    <item>
         <shape>
             <solid android:color="@color/white" />
         </shape>
