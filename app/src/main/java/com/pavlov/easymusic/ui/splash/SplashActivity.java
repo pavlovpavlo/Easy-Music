@@ -1,4 +1,4 @@
-package com.pavlov.easymusic;
+package com.pavlov.easymusic.ui.splash;
 
 import android.animation.Animator;
 import android.content.Intent;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.pavlov.easymusic.R;
+import com.pavlov.easymusic.ui.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

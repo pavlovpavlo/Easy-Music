@@ -2,16 +2,18 @@ package com.pavlov.easymusic.model;
 
 public class Song {
 
-    private long id;
-    private String title;
-    private String artist;
-    private String path;
+    private final long id;
+    private final String title;
+    private final String artist;
+    private final String path;
+    private final Long duration;
 
-    public Song(long id, String title, String artist, String path) {
+    public Song(long id, String title, String artist, String path, Long duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
         this.path = path;
+        this.duration = duration;
     }
 
     public long getId() {
@@ -28,5 +30,9 @@ public class Song {
 
     public String getPath() {
         return path;
+    }
+
+    public Long getDuration() {
+        return duration;
     }
 }
