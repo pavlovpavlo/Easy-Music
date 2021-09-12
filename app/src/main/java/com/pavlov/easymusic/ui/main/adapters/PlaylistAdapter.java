@@ -1,11 +1,9 @@
 package com.pavlov.easymusic.ui.main.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +22,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
     private List<Song> arrayList;
     private Context ctx;
 
-    public PlaylistAdapter(Context ctx){
+    public PlaylistAdapter(Context ctx) {
         this.ctx = ctx;
         arrayList = new ArrayList<>();
     }
@@ -44,7 +42,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     @Override
     public void onBindViewHolder(@NonNull PlaylistViewHolder holder, int position) {
-        Song song =arrayList.get(position);
+        Song song = arrayList.get(position);
         holder.title.setText(song.getTitle());
         holder.artist.setText(song.getArtist());
         holder.duration.setText(song.getDuration().toString());
@@ -55,7 +53,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         return arrayList.size();
     }
 
-    public static class PlaylistViewHolder extends  RecyclerView.ViewHolder{
+    public static class PlaylistViewHolder extends RecyclerView.ViewHolder {
 
         public CardView imageContainer;
         public TextView title;
