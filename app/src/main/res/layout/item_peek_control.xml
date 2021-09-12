@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-    android:layout_height="70dp"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="5dp"
+    android:id="@+id/peek_control"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginTop="10dp"
     android:layout_marginBottom="5dp"
     android:background="@drawable/music_item_bg"
-    android:padding="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:padding="10dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/image_container"
@@ -28,73 +29,73 @@
     <TextView
         android:id="@+id/music_name"
         android:layout_width="0dp"
-        android:layout_marginStart="15dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:layout_marginEnd="20dp"
-        android:fontFamily="@font/roboto_reg"
-        android:text="name"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:layout_marginBottom="15dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/roboto_reg"
+        android:maxLines="1"
+        android:text="name"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@id/previous_music"
         android:textSize="13sp"
-        app:layout_constraintStart_toEndOf="@id/image_container"
         app:layout_constraintBottom_toBottomOf="@id/music_album"
+        app:layout_constraintEnd_toStartOf="@id/previous_music"
+        app:layout_constraintStart_toEndOf="@id/image_container"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/music_album"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="15dp"
-        app:layout_constraintEnd_toStartOf="@id/previous_music"
-        android:fontFamily="@font/roboto_reg"
-        android:text="group"
-        android:maxLines="1"
+        android:layout_marginEnd="20dp"
         android:ellipsize="end"
+        android:fontFamily="@font/roboto_reg"
+        android:maxLines="1"
+        android:text="group"
         android:textColor="@color/gray_main"
         android:textSize="13sp"
-        app:layout_constraintTop_toTopOf="@id/music_name"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/music_name"/>
+        app:layout_constraintEnd_toStartOf="@id/previous_music"
+        app:layout_constraintStart_toStartOf="@id/music_name"
+        app:layout_constraintTop_toTopOf="@id/music_name" />
 
     <ImageButton
         android:id="@+id/previous_music"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="15dp"
-        android:padding="2dp"
         android:background="@drawable/circle_white"
-        app:layout_constraintEnd_toStartOf="@id/control_music"
+        android:padding="2dp"
+        android:src="@drawable/ic_skip_previous"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_skip_previous"/>
+        app:layout_constraintEnd_toStartOf="@id/control_music"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/control_music"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="15dp"
-        android:padding="7dp"
         android:background="@drawable/circle_main"
-        app:layout_constraintEnd_toStartOf="@id/next_music"
+        android:padding="7dp"
+        android:src="@drawable/ic_play_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_play_arrow"/>
+        app:layout_constraintEnd_toStartOf="@id/next_music"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/next_music"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="2dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/circle_white"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="2dp"
+        android:src="@drawable/ic_skip_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_skip_next"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

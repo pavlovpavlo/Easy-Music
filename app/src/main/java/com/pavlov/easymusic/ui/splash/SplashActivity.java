@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
     private void startAnimation() {
         cardPlay.animate().withLayer()
                 .rotationX(720)
-                .setDuration(3000)
+                .setDuration(2500)
                 .setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animator) {

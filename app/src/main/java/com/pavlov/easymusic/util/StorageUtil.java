@@ -1,51 +1,61 @@
 package com.pavlov.easymusic.util;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pavlov.easymusic.model.Song;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class StorageUtil {
-    public static List<Song> getSongList(Context context) {
-        List<Song> songs = new ArrayList<>();
 
-        ContentResolver musicResolver = context.getContentResolver();
-        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor =
-                musicResolver.query(musicUri, null, null, null, null);
-        if (musicCursor != null && musicCursor.moveToFirst()) {
-            //get columns
-            int titleColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.TITLE);
-            int idColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media._ID);
-            int artistColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.ARTIST);
-            int data = musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA);
-            int duration = musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
+    private final String STORAGE = " com.valdioveliu.valdio.audioplayer.STORAGE";
+    private SharedPreferences preferences;
+    private Context context;
 
-            do {
-                long thisId = musicCursor.getLong(idColumn);
-                String thisTitle = musicCursor.getString(titleColumn);
-                String thisArtist = musicCursor.getString(artistColumn);
-                String thisData = musicCursor.getString(data);
-                Long thisDuration = musicCursor.getLong(duration);
-                songs.add(new Song(thisId, thisTitle, thisArtist, thisData, thisDuration));
+    public StorageUtil(Context context) {
+        this.context = context;
+    }
 
-            }
-            while (musicCursor.moveToNext());
+    public void storeSong(List<Song> arrayList) {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
 
-            Collections.sort(songs, (a, b) -> a.getTitle().compareTo(b.getTitle()));
+        SharedPreferences.Editor editor = preferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(arrayList);
+        editor.putString("audioArrayList", json);
+        editor.apply();
+    }
 
-        }
+    public ArrayList<Song> loadSong() {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = preferences.getString("audioArrayList", null);
+        Type type = new TypeToken<ArrayList<Song>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
 
-        return songs;
+    public void storeSongIndex(int index) {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("audioIndex", index);
+        editor.apply();
+    }
+
+    public int loadSongIndex() {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        return preferences.getInt("audioIndex", -1);//return -1 if no data found
+    }
+
+    public void clearCachedSongPlaylist() {
+        preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.commit();
     }
 }
