@@ -23,8 +23,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-
 import com.pavlov.easymusic.R;
 import com.pavlov.easymusic.model.Song;
 import com.pavlov.easymusic.ui.main.MainActivity;
@@ -39,6 +37,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
     // Binder given to clients
     private final IBinder iBinder = new LocalBinder();
+    private OnAudioStateChange onAudioStateChange;
     private MediaPlayer mediaPlayer;
     //path to the audio file
     private String mediaFile;
@@ -61,10 +60,11 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     //MediaSession
     private MediaSessionManager mediaSessionManager;
     private MediaSession mediaSession;
-    private MediaController.TransportControls transportControls;
+    public MediaController.TransportControls transportControls;
 
     //AudioPlayer notification ID
     private static final int NOTIFICATION_ID = 101;
+
     public enum PlaybackStatus {
         PLAYING,
         PAUSED
@@ -73,6 +73,10 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     @Override
     public IBinder onBind(Intent intent) {
         return iBinder;
+    }
+
+    public void setOnAudioStateChange(OnAudioStateChange onAudioStateChange) {
+        this.onAudioStateChange = onAudioStateChange;
     }
 
     private void initMediaSession() throws RemoteException {
@@ -140,7 +144,33 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         });
     }
 
-    private void buildNotification(PlaybackStatus playbackStatus) {
+    public void setServiceAction(int actionNumber) {
+        switch (actionNumber) {
+            case 0:
+                // Play
+                playbackAction(0);
+                playMedia();
+                buildNotification(PlaybackStatus.PLAYING);
+            case 1:
+                // Pause
+                playbackAction(1);
+                pauseMedia();
+                buildNotification(PlaybackStatus.PAUSED);
+            case 2:
+                // Next track
+                playbackAction(2);
+                playMedia();
+                buildNotification(PlaybackStatus.PLAYING);
+            case 3:
+                playbackAction(3);
+                skipToPrevious();
+                buildNotification(PlaybackStatus.PLAYING);
+            default:
+                break;
+        }
+    }
+
+    public void buildNotification(PlaybackStatus playbackStatus) {
 
         int notificationAction = R.drawable.ic_pause_main;//needs to be initialized
         PendingIntent play_pauseAction = null;
@@ -249,27 +279,26 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         //reset mediaPlayer
         mediaPlayer.reset();
         initMediaPlayer();
+        onAudioStateChange.onTrackChange();
     }
 
     public void skipToPrevious() {
 
         if (audioIndex == 0) {
-            //if first in playlist
-            //set index to the last of audioList
             audioIndex = audioList.size() - 1;
             activeAudio = audioList.get(audioIndex);
         } else {
-            //get previous in playlist
             activeAudio = audioList.get(--audioIndex);
         }
 
-        //Update stored index
         new StorageUtil(getApplicationContext()).storeSongIndex(audioIndex);
 
         stopMedia();
         //reset mediaPlayer
         mediaPlayer.reset();
         initMediaPlayer();
+
+        onAudioStateChange.onTrackChange();
     }
 
     private void updateMetaData() {
@@ -303,6 +332,8 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     public void playMedia() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
+
+            onAudioStateChange.onTrackStart();
         }
     }
 
@@ -310,6 +341,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         if (mediaPlayer == null) return;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
+            //onAudioStateChange.onTrackPause();
         }
     }
 
@@ -317,6 +349,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
+            onAudioStateChange.onTrackPause();
         }
     }
 
@@ -324,6 +357,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.seekTo(resumePosition);
             mediaPlayer.start();
+            onAudioStateChange.onTrackStart();
         }
     }
 
@@ -333,7 +367,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         stopMedia();
         //stop the service
         stopSelf();
-        skipToNext();
+        transportControls.skipToNext();
     }
 
     //Handle errors

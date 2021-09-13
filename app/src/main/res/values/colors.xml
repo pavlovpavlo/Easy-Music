@@ -6,4 +6,5 @@
     <color name="main_50">#805C87F7</color>
     <color name="gray_light">#F2F3F8</color>
     <color name="gray_main">#9A9DAC</color>
+    <color name="gray_ee">#EEEEEE</color>
 </resources>

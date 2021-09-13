@@ -21,6 +21,15 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
 
     private List<Song> arrayList;
     private Context ctx;
+    private OnSongClickListener listener;
+
+    public interface OnSongClickListener{
+        void onSongClick(int position);
+    }
+
+    public void setListener(OnSongClickListener listener) {
+        this.listener = listener;
+    }
 
     public PlaylistAdapter(Context ctx) {
         this.ctx = ctx;
@@ -45,7 +54,30 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.Playli
         Song song = arrayList.get(position);
         holder.title.setText(song.getTitle());
         holder.artist.setText(song.getArtist());
-        holder.duration.setText(song.getDuration().toString());
+
+        long milliseconds = song.getDuration();
+        long minutes = (milliseconds / 1000) / 60;
+        long seconds = (milliseconds / 1000) % 60;
+
+        holder.duration.setText((minutes > 9 ? minutes : "0" + minutes)
+                + ":"
+                + (seconds > 9 ? seconds : "0" + seconds));
+
+        holder.itemView.setOnClickListener(view -> listener.onSongClick(position));
+
+        if(song.isActive()){
+            holder.itemView.setBackgroundResource(R.drawable.music_item_bg_active);
+            holder.imageContainer.setCardBackgroundColor(holder.itemView.getResources().getColor(R.color.gray_light));
+            holder.title.setTextColor(holder.itemView.getResources().getColor(R.color.white));
+            holder.duration.setTextColor(holder.itemView.getResources().getColor(R.color.gray_light));
+            holder.artist.setTextColor(holder.itemView.getResources().getColor(R.color.gray_light));
+        }else{
+            holder.itemView.setBackgroundResource(R.drawable.music_item_bg);
+            holder.imageContainer.setCardBackgroundColor(holder.itemView.getResources().getColor(R.color.gray_ee));
+            holder.title.setTextColor(holder.itemView.getResources().getColor(R.color.black));
+            holder.duration.setTextColor(holder.itemView.getResources().getColor(R.color.gray_main));
+            holder.artist.setTextColor(holder.itemView.getResources().getColor(R.color.gray_main));
+        }
     }
 
     @Override

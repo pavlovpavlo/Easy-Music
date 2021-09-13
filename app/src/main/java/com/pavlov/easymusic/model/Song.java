@@ -7,6 +7,7 @@ public class Song {
     private final String artist;
     private final String path;
     private final Long duration;
+    private boolean isActive = false;
 
     public Song(long id, String title, String artist, String path, Long duration) {
         this.id = id;
@@ -34,5 +35,13 @@ public class Song {
 
     public Long getDuration() {
         return duration;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

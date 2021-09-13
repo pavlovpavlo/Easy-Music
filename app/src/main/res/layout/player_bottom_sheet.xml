@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical"
-    app:behavior_peekHeight="80dp"
+    app:behavior_peekHeight="70dp"
     app:cardElevation="35dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 

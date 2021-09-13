@@ -12,7 +12,7 @@
         android:id="@+id/image_container"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        app:cardBackgroundColor="#EEEEEE"
+        app:cardBackgroundColor="@color/gray_ee"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"

@@ -40,7 +40,7 @@
         android:textColor="@color/black"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@id/music_album"
-        app:layout_constraintEnd_toStartOf="@id/previous_music"
+        app:layout_constraintEnd_toStartOf="@id/previous_music_peek"
         app:layout_constraintStart_toEndOf="@id/image_container"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,12 +57,12 @@
         android:textColor="@color/gray_main"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/previous_music"
+        app:layout_constraintEnd_toStartOf="@id/previous_music_peek"
         app:layout_constraintStart_toStartOf="@id/music_name"
         app:layout_constraintTop_toTopOf="@id/music_name" />
 
     <ImageButton
-        android:id="@+id/previous_music"
+        android:id="@+id/previous_music_peek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -70,23 +70,23 @@
         android:padding="2dp"
         android:src="@drawable/ic_skip_previous"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/control_music"
+        app:layout_constraintEnd_toStartOf="@id/control_music_peek"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/control_music"
+        android:id="@+id/control_music_peek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:background="@drawable/circle_main"
         android:padding="7dp"
-        android:src="@drawable/ic_play_arrow"
+        android:src="@drawable/ic_pause"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/next_music"
+        app:layout_constraintEnd_toStartOf="@id/next_music_peek"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/next_music"
+        android:id="@+id/next_music_peek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
